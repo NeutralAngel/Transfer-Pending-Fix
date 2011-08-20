@@ -1,0 +1,94 @@
+SELECT *
+FROM PMSC.BIL_DATES
+WHERE BIL_ACCOUNT_ID   = 'XX123456'
+AND   BIL_REFERENCE_DT = '03/19/2011'
+;
+UPDATE
+     PMSC.BIL_DATES
+SET   BIL_ADJ_DUE_DT   = '03/19/2011'
+,     BIL_INV_DT       = '03/09/2011'
+WHERE BIL_ACCOUNT_ID   = 'XX123456'
+AND   BIL_REFERENCE_DT = '03/19/2011'
+;
+INSERT INTO PMSC.BIL_DATES
+VALUES ('XX123456'
+       ,'04/19/2011'
+       ,'04/19/2011'
+       ,'04/19/2011'
+       ,'04/08/2011'
+       ,'S'
+       ,'N'
+       ,' '
+       ,'Y'
+       ,'N'
+       ,' ')
+;
+INSERT INTO PMSC.BIL_DATES
+VALUES ('XX123456'
+       ,'05/19/2011'
+       ,'05/19/2011'
+       ,'05/19/2011'
+       ,'05/09/2011'
+       ,'S'
+       ,'N'
+       ,' '
+       ,'Y'
+       ,'N'
+       ,' ')
+;
+INSERT INTO PMSC.BIL_DATES
+VALUES ('XX123456'
+       ,'06/19/2011'
+       ,'06/19/2011'
+       ,'06/19/2011'
+       ,'06/09/2011'
+       ,'S'
+       ,'N'
+       ,' '
+       ,'Y'
+       ,'N'
+       ,' ')
+;
+INSERT INTO PMSC.BIL_DATES
+VALUES ('XX123456'
+       ,'07/19/2011'
+       ,'07/19/2011'
+       ,'07/19/2011'
+       ,'07/08/2011'
+       ,'S'
+       ,'N'
+       ,' '
+       ,'Y'
+       ,'N'
+       ,' ')
+;
+INSERT INTO PMSC.BIL_DATES
+VALUES ('XX123456'
+       ,'08/19/2011'
+       ,'08/19/2011'
+       ,'08/19/2011'
+       ,'08/09/2011'
+       ,'S'
+       ,'N'
+       ,' '
+       ,'Y'
+       ,'N'
+       ,' ')
+;
+INSERT INTO PMSC.BIL_DATES
+VALUES ('XX123456'
+       ,'09/19/2011'
+       ,'09/19/2011'
+       ,'09/19/2011'
+       ,'09/09/2011'
+       ,'S'
+       ,'N'
+       ,' '
+       ,'Y'
+       ,'N'
+       ,' ')
+;
+SELECT *
+FROM PMSC.BIL_DATES
+WHERE BIL_ACCOUNT_ID   = 'XX123456'
+;
