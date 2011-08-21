@@ -26,27 +26,37 @@ module TransferPending
         update = true
       end
       
-      TransferPending::select(table, accountID, referenceDate, update)
-      
       invoiceDate = TransferPending::weekend(startDueDate - 10)
       
+      billDates = {
+        table:          table,
+        accountID:      accountID,
+        startDueDate:   startDueDate,
+        referenceDate:  referenceDate,
+        invoiceDate:    invoiceDate,
+        update:         update
+      } 
+      
+      TransferPending::select(billDates)
+                  
       if update
-        TransferPending::update(table, accountID, referenceDate, startDueDate, invoiceDate)
-        startDueDate = TransferPending::increment(startDueDate)
-        referenceDate = TransferPending::increment(referenceDate)
-        invoiceDate = TransferPending::weekend(startDueDate - 10)
+        TransferPending::update(billDates)
+        billDates[:startDueDate] = TransferPending::increment(billDates[:startDueDate])
+        billDates[:referenceDate] = TransferPending::increment(billDates[:referenceDate])
+        billDates[:invoiceDate] = TransferPending::weekend(billDates[:startDueDate] - 10)
       end
       
-      TransferPending::insert(table, accountID, referenceDate, startDueDate, invoiceDate)
+      TransferPending::insert(billDates)
       
-      until invoiceDate > currentDate
-          startDueDate = TransferPending::increment(startDueDate)
-          referenceDate = TransferPending::increment(referenceDate)
-          invoiceDate = TransferPending::weekend(startDueDate - 10)
-          TransferPending::insert(table, accountID, referenceDate, startDueDate, invoiceDate)
+      until billDates[:invoiceDate] > currentDate
+          billDates[:startDueDate] = TransferPending::increment(billDates[:startDueDate])
+          billDates[:referenceDate] = TransferPending::increment(billDates[:referenceDate])
+          billDates[:invoiceDate] = TransferPending::weekend(billDates[:startDueDate] - 10)
+          TransferPending::insert(billDates)
       end
       
-      TransferPending::select(table, accountID, referenceDate, false)
+      billDates[:update] = false
+      TransferPending::select(billDates)
     end
   end
 end
