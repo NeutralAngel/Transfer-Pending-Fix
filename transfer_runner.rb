@@ -9,37 +9,28 @@ module TransferPending
       File.open('output.txt','w') do |file|
       end
       
-      table = 'PMSC.BIL_DATES'
+      billDates = {:table => 'PMSC.BIL_DATES'}
       currentDate = DateTime.now
       
       puts "Please enter the bill accound ID:" 
-      accountID = gets.chomp.upcase
+      billDates[:accountID] = gets.chomp.upcase
 
       puts "Please enter the start due date:"
-      startDueDate = Date.strptime(gets.chomp,"%m/%d/%Y")
+      billDates[:startDueDate] = Date.strptime(gets.chomp,"%m/%d/%Y")
       
       puts "Please enter the reference date:"
-      referenceDate = Date.strptime(gets.chomp,"%m/%d/%Y")
+      billDates[:referenceDate] = Date.strptime(gets.chomp,"%m/%d/%Y")
       
       puts "Do you need an update?"
       if gets.chomp.downcase == 'y'
-        update = true
+        billDates[:update] = true
       end
       
-      invoiceDate = TransferPending::weekend(startDueDate - 10)
-      
-      billDates = {
-        table:          table,
-        accountID:      accountID,
-        startDueDate:   startDueDate,
-        referenceDate:  referenceDate,
-        invoiceDate:    invoiceDate,
-        update:         update
-      } 
+      billDates[:invoiceDate] = TransferPending::weekend(billDates[:startDueDate] - 10)
       
       TransferPending::select(billDates)
                   
-      if update
+      if billDates[:update]
         TransferPending::update(billDates)
         billDates[:startDueDate] = TransferPending::increment(billDates[:startDueDate])
         billDates[:referenceDate] = TransferPending::increment(billDates[:referenceDate])
