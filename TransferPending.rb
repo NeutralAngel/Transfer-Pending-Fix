@@ -56,9 +56,7 @@ module TransferPending
       end
       
       def increment (date)
-        month = date.month
-        month += 1
-        return Date.new(date.year, month, date.day)
+        date>>(1)
       end
     end
   end
